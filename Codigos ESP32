@@ -1,0 +1,48 @@
+Ejemplo 1: Get Chip ID (Identificador del Chip)
+uint32_t chipId = 0;
+
+void setup() {
+  Serial.begin(115200);
+}
+
+void loop() {
+  // Leer el Chip ID (basado en la MAC)
+  for(int i=0; i<17; i=i+8) {
+    chipId |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
+  }
+
+  Serial.printf("ESP32 Chip model = %s Rev %d\n", ESP.getChipModel(), ESP.getChipRevision());
+  Serial.printf("This chip has %d cores\n", ESP.getChipCores());
+  Serial.print("Chip ID: "); Serial.println(chipId);
+
+  delay(3000);
+}
+
+
+Ejemplo 2: Blink (Parpadeo del LED)
+void setup() {
+  pinMode(2, OUTPUT); // GPIO 2 es el LED interno en muchas placas
+  Serial.begin(115200);
+  Serial.println("Programa ESP32 inicialitzat!");
+}
+
+void loop() {
+  digitalWrite(2, HIGH); // Encén el LED
+  delay(1000);           // Espera 1 segon
+  digitalWrite(2, LOW);  // Apaga el LED
+  delay(1000);           // Espera 1 segon
+  Serial.println("Loop executat (Blink).");
+}
+
+
+Ejemplo 3: Loop con mensaje cada 2 segundos
+void setup() {
+  Serial.begin(115200); 
+  Serial.println("Iniciant programa de missatges...");
+}
+
+void loop() {
+  Serial.println("Missatge repetit cada 2 segons.");
+  delay(2000); // 2000 milisegons = 2 segons
+}
+
