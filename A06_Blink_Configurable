@@ -1,0 +1,40 @@
+/*
+  Project: Blink Configurable
+  Description: Fa parpellejar un LED amb temps d'encesa i apagat configurables.
+*/
+
+// --- CONSTANTS ---
+// Definim el pin on està connectat el LED (no canviarà mai)
+const int LED_PIN = 23; 
+
+// --- VARIABLES CONFIGURABLES ---
+// Modifica aquests valors per canviar el comportament del LED (en mil·lisegons)
+int tempsEncès = 500;   // El LED estarà encès mig segon
+int tempsApagat = 1500; // El LED estarà apagat un segon i mig
+
+void setup() {
+  // Configurem el pin del LED com a sortida
+  pinMode(LED_PIN, OUTPUT);
+  
+  // Iniciem el monitor sèrie per veure què passa
+  Serial.begin(115200);
+  Serial.println("--- Iniciant programa Blink Configurable ---");
+  Serial.print("Temps encès: ");
+  Serial.print(tempsEncès);
+  Serial.println(" ms");
+  Serial.print("Temps apagat: ");
+  Serial.print(tempsApagat);
+  Serial.println(" ms");
+}
+
+void loop() {
+  // 1. Encendre el LED
+  digitalWrite(LED_PIN, HIGH);  
+  Serial.println("LED ENCÈS");
+  delay(tempsEncès); // Utilitzem la variable de temps encès
+  
+  // 2. Apagar el LED
+  digitalWrite(LED_PIN, LOW);   
+  Serial.println("LED APAGAT");
+  delay(tempsApagat); // Utilitzem la variable de temps apagat
+}
