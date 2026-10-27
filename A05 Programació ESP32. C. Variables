@@ -1,0 +1,63 @@
+/*
+ ACTIVITAT A05: Programació ESP32. Variables
+ Objectiu: Explicar els tipus de variables mitjançant exemples i comentaris.
+*/
+
+
+// --- 1. CONSTANTS (valors que no canvien) ---
+const int LED_PIN = 2;         // El pin on està el LED integrat de l'ESP32
+const int TEMPS_ESPERA = 1000; // Temps d'espera fix (1 segon)
+
+
+// --- 2. VARIABLES (valors que poden canviar) ---
+int comptador = 0;             // int: Número enter (per comptar voltes)
+long tempsTotal = 0;           // long: Número enter gran (per guardar temps en mil·lisegons)
+float temperatura = 24.5;      // float: Número amb decimals (per a sensors)
+char lletra = 'A';             // char: Un sol caràcter (una lletra)
+bool ledEncendido = false;     // bool: Només pot ser true (vertader) o false (fals)
+
+
+void setup() {
+ // S'executa una vegada en encendre la placa
+ Serial.begin(115200);        // Iniciem la comunicació per veure missatges
+ pinMode(LED_PIN, OUTPUT);    // Configurem el pin del LED com a sortida
+
+
+ // Mostrem per pantalla el valor inicial de les variables
+ Serial.println("--- INICI DEL PROGRAMA ---");
+ Serial.print("Temperatura: "); Serial.print(temperatura); Serial.println(" graus");
+ Serial.print("Lletra: "); Serial.println(lletra);
+}
+
+
+void loop() {
+ // S'executa en bucle infinit
+  // 1. Canviem l'estat de la variable booleana
+ ledEncendido = !ledEncendido; // Si era true, ara és false, i viceversa.
+
+
+ // 2. Actuem segons l'estat del LED
+ if (ledEncendido == true) {
+   digitalWrite(LED_PIN, HIGH); // Encenem el LED
+ } else {
+   digitalWrite(LED_PIN, LOW);  // Apaguem el LED
+ }
+
+
+ // 3. Actualitzem les variables
+ comptador = comptador + 1;           // Sumem 1 al comptador
+ tempsTotal = tempsTotal + TEMPS_ESPERA; // Sumem el temps d'espera al total
+ temperatura = temperatura + 0.1;     // Pugem la temperatura una mica (simulació)
+
+
+ // 4. Mostrem els resultats pel monitor sèrie
+ Serial.print("Volta: "); Serial.print(comptador);
+ Serial.print(" | LED Encès?: "); Serial.print(ledEncendido);
+ Serial.print(" | Temp: "); Serial.print(temperatura);
+ Serial.print(" | Temps total: "); Serial.print(tempsTotal);
+ Serial.println(" ms");
+
+
+ // 5. Esperem una estona abans de tornar a començar
+ delay(TEMPS_ESPERA);
+}
